@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>麻將性格測驗</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin: 20px 0;
+        }
+        .question label {
+            font-size: 18px;
+            color: #555;
+        }
+        .answer {
+            display: flex;
+            margin-top: 10px;
+        }
+        .answer input[type="radio"] {
+            margin-right: 10px;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .result {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 20px;
+            color: #555;
+            display: none;
+        }
+        .start-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .start-btn:hover {
+            background-color: #0056b3;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>麻將性格測驗</h1>
+        <div id="quiz-container">
+            <div class="question">
+                <label>1. 當你聽牌時，你會怎麼做？</label><br>
+                <div class="answer">
+                    <input type="radio" name="q1" value="A"> 直覺感覺哪張牌好就打，心情好時運氣通常會更好。
+                    <input type="radio" name="q1" value="B"> 仔細計算剩餘的牌，根據牌池狀況做出最優選擇。
+                </div>
+            </div>
+
+            <div class="question">
+                <label>2. 對你來說，選擇一張牌時，你的主要依據是什麼？</label><br>
+                <div class="answer">
+                    <input type="radio" name="q2" value="A"> 心情和當時的氛圍，感覺自己運氣好就下。
+                    <input type="radio" name="q2" value="B"> 每次選牌都會回顧自己的牌型，確保每一步都是合邏輯的。
+                </div>
+            </div>
+
+            <div class="question">
+                <label>3. 當別人碰或槓的時候，你會怎麼反應？</label><br>
+                <div class="answer">
+                    <input type="radio" name="q3" value="A"> 感覺會不會讓自己有機會聽牌，對局面有些直覺反應。
+                    <input type="radio" name="q3" value="B"> 會根據對手的出牌趨勢與自己的手牌作出理性推測，預測後續可能的風險。
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="start-btn" onclick="calculateResult()">開始測試</button>
+            </div>
+        </div>
+
+        <div id="result" class="result">
+            <p id="result-text"></p>
+            <button class="btn" onclick="restartQuiz()">重新測試</button>
+        </div>
+    </div>
+
+    <script>
+        function calculateResult() {
+            var scoreA = 0;
+            var scoreB = 0;
+            
+            // 讀取每一題的選項
+            for (var i = 1; i <= 3; i++) {
+                var selectedOption = document.querySelector('input[name="q' + i + '"]:checked');
+                if (selectedOption) {
+                    if (selectedOption.value === "A") {
+                        scoreA++;
+                    } else if (selectedOption.value === "B") {
+                        scoreB++;
+                    }
+                }
+            }
+
+            // 根據分數決定結果
+            var resultText = "";
+            if (scoreA > scoreB) {
+                resultText = "你是感覺派玩家！你依賴直覺和氣氛，在麻將桌上總能隨機應變，享受打牌的樂趣！";
+            } else {
+                resultText = "你是理性派玩家！你喜歡計算每一步，深思熟慮後做出最合適的選擇，麻將對你來說是一場策略戰！";
+            }
+
+            // 顯示結果
+            document.getElementById("result-text").innerText = resultText;
+            document.getElementById("quiz-container").style.display = "none";
+            document.getElementById("result").style.display = "block";
+        }
+
+        function restartQuiz() {
+            // 重置測驗
+            document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+            document.getElementById("result").style.display = "none";
+            document.getElementById("quiz-container").style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
